@@ -1,0 +1,26 @@
+/* ============================================================
+   auth.css — 登录 / 注册界面样式
+   ============================================================ */
+
+.auth-wrap {
+  height: 100%;
+  display: grid; place-items: center;
+}
+.auth-card {
+  width: 380px; background: var(--cg-bg-elev); padding: var(--cg-space-xl); border-radius: var(--cg-radius-2xl); box-shadow: var(--cg-shadow);
+}
+.auth-card h1 { margin: 0 0 4px; font-size: var(--cg-font-xl); }
+.auth-card p.sub { margin: 0 0 var(--cg-space-lg); color: var(--cg-muted); font-size: var(--cg-font-base); }
+.auth-card label { display:block; font-size: var(--cg-font-sm); color: var(--cg-muted); margin: 12px 0 var(--cg-space-xs); }
+.auth-card input {
+  width: 100%; padding: 9px 11px; border: 1px solid var(--cg-rule); border-radius: var(--cg-radius-lg); font-size: var(--cg-font-md);
+  outline: none; background: var(--cg-white);
+}
+.auth-card input:focus { border-color: var(--cg-accent); }
+.auth-card button.primary {
+  width: 100%; margin-top: var(--cg-space-lg); padding: 10px; border: 0; border-radius: var(--cg-radius-lg);
+  background: var(--cg-accent); color: var(--cg-white); font-weight: 600; cursor: pointer;
+}
+.auth-card .switch { margin-top: var(--cg-space-lg); text-align: center; color: var(--cg-muted); font-size: var(--cg-font-base); }
+.auth-card .switch a { color: var(--cg-accent); text-decoration: none; cursor: pointer; }
+.auth-err { color: var(--cg-danger); margin-top: var(--cg-space-sm); font-size: var(--cg-font-base); }

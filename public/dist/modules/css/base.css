@@ -1,0 +1,13 @@
+/* ============================================================
+   base.css — 全局重置、body、通用排版
+   ============================================================ */
+
+* { box-sizing: border-box; }
+html, body, #app { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--cg-font-stack);
+  background: var(--cg-bg);
+  color: var(--cg-ink);
+  font-size: var(--cg-font-md);
+}

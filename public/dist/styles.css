@@ -1,0 +1,37 @@
+/* ============================================================
+   styles.css — CollabGrid CSS 入口文件
+   按顺序引入所有模块化子文件
+   ============================================================ */
+
+/* 1. 设计令牌（CSS 变量） */
+@import url("modules/css/variables.css");
+
+/* 2. 全局重置、body、通用排版 */
+@import url("modules/css/base.css");
+
+/* 3. 登录 / 注册界面 */
+@import url("modules/css/auth.css");
+
+/* 4. 侧边栏 + Topbar 布局 */
+@import url("modules/css/shell.css");
+
+/* 5. 右键菜单 */
+@import url("modules/css/context-menu.css");
+
+/* 6. 表格核心样式（表头、单元格、行、分页、工具栏） */
+@import url("modules/css/grid.css");
+
+/* 7. 选择区高亮、焦点样式 */
+@import url("modules/css/selection.css");
+
+/* 8. 模态框、弹窗、遮罩 */
+@import url("modules/css/modal.css");
+
+/* 9. 数据大屏样式 */
+@import url("modules/css/dashboard.css");
+
+/* 10. 审计日志面板 */
+@import url("modules/css/audit.css");
+
+/* 11. 杂项样式（toast、invite-box、job-result、severity、member、schedule、badge） */
+@import url("modules/css/misc.css");

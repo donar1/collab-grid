@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+    env:
+      NODE_ENV: test
+      DB_ENGINE: sqlite
+      PORT: 3099
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Syntax check
+        run: npm run check
+
+      - name: Build
+        run: npm run build
+
+      - name: Start server
+        run: |
+          node server.js &
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:3099/health && exit 0
+            sleep 1
+          done
+          echo "Server failed to start"
+          exit 1
+
+      - name: Run tests
+        run: npm test
+
+      - name: Security audit
+        run: |
+          npm audit --audit-level=high
+          exit_code=$?
+          if [ $exit_code -ne 0 ]; then
+            echo "::warning::npm audit found high/critical vulnerabilities"
+          fi
+          exit 0

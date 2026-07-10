@@ -1,0 +1,27 @@
+{
+  "inputs": {
+    "public/app.js": {
+      "bytes": 407,
+      "imports": []
+    }
+  },
+  "outputs": {
+    "public/dist/app.ZDGZYPEU.js.map": {
+      "imports": [],
+      "exports": [],
+      "inputs": {},
+      "bytes": 575
+    },
+    "public/dist/app.ZDGZYPEU.js": {
+      "imports": [],
+      "exports": [],
+      "entryPoint": "public/app.js",
+      "inputs": {
+        "public/app.js": {
+          "bytesInOutput": 49
+        }
+      },
+      "bytes": 107
+    }
+  }
+}

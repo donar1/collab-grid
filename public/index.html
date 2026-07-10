@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>CollabGrid · 多维协作表</title>
+  <link rel="stylesheet" href="/styles.css?v=20260708-v06b" />
+</head>
+<body>
+  <div id="app"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- existing modules -->
+  <script src="/modules/clipboard.js?v=20260624-fixall"></script>
+  <script src="/modules/keyboard.js?v=20260624-fixall"></script>
+  <script src="/modules/fields.js?v=20260624-fixall"></script>
+  <script src="/modules/links.js?v=20260624-fixall"></script>
+  <script src="/modules/state.js?v=20260624-fixall"></script>
+  <script src="/modules/utils.js?v=20260709-fixtoast"></script>
+  <script src="/modules/api.js?v=20260624-fixall"></script>
+  <script src="/modules/modal.js?v=20260624-fixall"></script>
+  <!-- new modules (split from app.js) -->
+  <script src="/modules/auth.js?v=20260624-fixall"></script>
+  <script src="/modules/socket.js?v=20260708-v06"></script>
+  <script src="/modules/shell.js?v=20260708-v06"></script>
+  <!-- V0.5 表格渲染核心 -->
+  <script src="/modules/virtual-scroll.js?v=20260624-fixall"></script>
+  <script src="/modules/grid-render.js?v=20260624-fixall"></script>
+  <script src="/modules/cell-edit.js?v=20260709-fixall"></script>
+  <script src="/modules/clipboard-ops.js?v=20260709-fixall"></script>
+  <script src="/modules/dashboard.js?v=20260624-fixall"></script>
+  <script src="/modules/jobs.js?v=20260624-fixall"></script>
+  <script src="/modules/templates.js?v=20260624-fixall"></script>
+  <script src="/modules/field-modal-v2.js"></script>
+  <script src="/modules/link-picker.js?v=20260624-fixall"></script>
+  <script src="/modules/record-ops.js?v=20260624-fixall"></script>
+  <script src="/modules/members.js?v=20260624-fixall"></script>
+  <script src="/modules/audit.js?v=20260708-v05"></script>
+  <!-- entry point -->
+  <script src="/app.js?v=20260624-fixall"></script>
+  <!-- hidden paste target for clipboard fallback -->
+  <div id="clipboard-paste-target" contenteditable="true" style="position:fixed;left:-99999px;top:0;width:1px;height:1px;opacity:0;pointer-events:none;display:none;"></div>
+</body>
+</html>

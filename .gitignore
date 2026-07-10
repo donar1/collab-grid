@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Data
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# Backups
+backups/
+
+# Logs
+logs/
+*.log
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test coverage
+coverage/
+.nyc_output/

@@ -1,0 +1,124 @@
+/* ============================================================
+   variables.css — CollabGrid 设计令牌（Design Tokens）
+   命名前缀：--cg-*
+   ============================================================ */
+
+:root {
+  /* ---- 颜色：基础色板 ---- */
+  --cg-bg:           #f6f7fb;
+  --cg-bg-elev:      #ffffff;
+  --cg-ink:          #1a1f2c;
+  --cg-muted:        #6b7280;
+  --cg-rule:         #e5e7eb;
+  --cg-rule-strong:  #cbd5e1;
+
+  /* ---- 颜色：功能色 ---- */
+  --cg-accent:       #3b6ea8;
+  --cg-accent-soft:  #e7eef7;
+  --cg-warn:         #b45309;
+  --cg-warn-soft:    #fef3c7;
+  --cg-danger:       #b91c1c;
+  --cg-ok:           #047857;
+
+  /* ---- 颜色：白色（便捷引用） ---- */
+  --cg-white:        #ffffff;
+
+  /* ---- 颜色：表头背景 ---- */
+  --cg-th-bg:        #f8fafc;
+
+  /* ---- 颜色：编辑态 / 聚焦态 ---- */
+  --cg-focus-bg:     #fff8e1;
+  --cg-focus-ring:   rgba(59, 110, 168, .25);
+
+  /* ---- 颜色：resize 拖拽高亮 ---- */
+  --cg-resize-glow:  rgba(59, 110, 168, .18);
+
+  /* ---- 颜色：锁定行条纹 ---- */
+  --cg-locked-stripe-a: #fafafa;
+  --cg-locked-stripe-b: #f3f4f6;
+
+  /* ---- 颜色：封账标记 ---- */
+  --cg-sealed-bg:    #fee2e2;
+  --cg-sealed-fg:    #991b1b;
+
+  /* ---- 颜色：删除悬停 ---- */
+  --cg-delete-hover-bg: #fff5f5;
+
+  /* ---- 颜色：新增行背景 ---- */
+  --cg-add-row-bg:   #fafbfd;
+
+  /* ---- 颜色：lookup 单元格渐变 ---- */
+  --cg-lookup-from:  #fcfdff;
+  --cg-lookup-to:    #f4f7fb;
+
+  /* ---- 颜色：lookup badge ---- */
+  --cg-lookup-live:     #0ea5e9;
+  --cg-lookup-snapshot: #b45309;
+
+  /* ---- 颜色：linked 悬停 ---- */
+  --cg-linked-hover-bg: #fde4e4;
+
+  /* ---- 颜色：severity ---- */
+  --cg-sev-high-bg:     #fee2e2;
+  --cg-sev-high-fg:     #991b1b;
+  --cg-sev-medium-bg:   #fef3c7;
+  --cg-sev-medium-fg:   #92400e;
+  --cg-sev-low-bg:      #dcfce7;
+  --cg-sev-low-fg:      #166534;
+
+  /* ---- 颜色：toast ---- */
+  --cg-toast-bg:      #1f2937;
+
+  /* ---- 颜色：job-result ---- */
+  --cg-job-bg:        #0f172a;
+  --cg-job-fg:        #e2e8f0;
+
+  /* ---- 颜色：selection ---- */
+  --cg-cell-selected:  rgba(59, 110, 168, .35);
+
+  /* ---- 颜色：modal 遮罩 ---- */
+  --cg-modal-overlay:  rgba(15, 23, 42, .4);
+
+  /* ---- 颜色：presence dot 边框 ---- */
+  --cg-presence-ring:  rgba(255, 255, 255, .55);
+
+  /* ---- 颜色：color-swatch 内阴影 ---- */
+  --cg-swatch-inner:   rgba(255, 255, 255, .55);
+
+  /* ---- 阴影 ---- */
+  --cg-shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 4px 12px rgba(15, 23, 42, .04);
+
+  /* ---- 间距 ---- */
+  --cg-space-xs:  4px;
+  --cg-space-sm:  8px;
+  --cg-space-md:  14px;
+  --cg-space-lg:  20px;
+  --cg-space-xl:  28px;
+
+  /* ---- 字号 ---- */
+  --cg-font-xs:   10px;
+  --cg-font-sm:   11px;
+  --cg-font-base: 13px;
+  --cg-font-md:   14px;
+  --cg-font-lg:   15px;
+  --cg-font-xl:   22px;
+
+  /* ---- 圆角 ---- */
+  --cg-radius-sm:  5px;
+  --cg-radius-md:  6px;
+  --cg-radius-lg:  8px;
+  --cg-radius-xl:  10px;
+  --cg-radius-2xl: 12px;
+  --cg-radius-pill: 999px;
+
+  /* ---- 字体栈 ---- */
+  --cg-font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Roboto, sans-serif;
+  --cg-font-mono:  ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ---- z-index 层级 ---- */
+  --cg-z-context-menu: 1000;
+  --cg-z-modal-mask:   100;
+  --cg-z-audit-panel:  80;
+  --cg-z-toast:        200;
+  --cg-z-dashboard:   2000;
+}

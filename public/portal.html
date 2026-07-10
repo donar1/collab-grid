@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>客户门户 · CollabGrid</title>
+  <style>
+    :root { --primary:#2563eb; --bg:#f8fafc; --card:#fff; --border:#e2e8f0; --text:#1e293b; --muted:#64748b; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--text); line-height:1.5; }
+    .container { max-width:1200px; margin:0 auto; padding:24px; }
+    header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; }
+    header h1 { font-size:20px; font-weight:600; }
+    .token-bar { display:flex; gap:8px; align-items:center; background:var(--card); padding:12px 16px; border-radius:8px; border:1px solid var(--border); margin-bottom:20px; }
+    .token-bar input { flex:1; padding:8px 12px; border:1px solid var(--border); border-radius:6px; font-size:14px; }
+    .token-bar button { padding:8px 16px; background:var(--primary); color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:14px; }
+    .token-bar button:hover { opacity:.9; }
+    .tabs { display:flex; gap:4px; margin-bottom:20px; border-bottom:1px solid var(--border); }
+    .tab { padding:10px 20px; cursor:pointer; border-bottom:2px solid transparent; color:var(--muted); font-size:14px; }
+    .tab.active { color:var(--primary); border-bottom-color:var(--primary); font-weight:500; }
+    .panel { display:none; }
+    .panel.active { display:block; }
+    .filters { display:flex; flex-wrap:wrap; gap:10px; background:var(--card); padding:16px; border-radius:8px; border:1px solid var(--border); margin-bottom:16px; }
+    .filters input, .filters select { padding:8px 12px; border:1px solid var(--border); border-radius:6px; font-size:13px; min-width:140px; }
+    .filters button { padding:8px 16px; background:var(--primary); color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:13px; }
+    .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-bottom:16px; }
+    .stat-card { background:var(--card); padding:16px; border-radius:8px; border:1px solid var(--border); }
+    .stat-card .label { font-size:12px; color:var(--muted); margin-bottom:4px; }
+    .stat-card .value { font-size:20px; font-weight:600; color:var(--primary); }
+    table { width:100%; background:var(--card); border-radius:8px; border:1px solid var(--border); border-collapse:collapse; font-size:13px; }
+    th, td { padding:12px 16px; text-align:left; border-bottom:1px solid var(--border); }
+    th { background:#f1f5f9; font-weight:500; font-size:12px; color:var(--muted); text-transform:uppercase; }
+    tr:hover { background:#f8fafc; }
+    .badge { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:500; }
+    .badge-success { background:#dcfce7; color:#166534; }
+    .badge-warn { background:#fef3c7; color:#92400e; }
+    .badge-info { background:#dbeafe; color:#1e40af; }
+    .pagination { display:flex; justify-content:center; align-items:center; gap:8px; margin-top:16px; }
+    .pagination button { padding:6px 14px; border:1px solid var(--border); background:var(--card); border-radius:6px; cursor:pointer; font-size:13px; }
+    .pagination button:disabled { opacity:.5; cursor:not-allowed; }
+    .pagination span { font-size:13px; color:var(--muted); }
+    .empty { text-align:center; padding:60px 20px; color:var(--muted); }
+    .empty svg { width:64px; height:64px; margin-bottom:16px; opacity:.3; }
+    .error { background:#fef2f2; color:#991b1b; padding:12px 16px; border-radius:6px; margin-bottom:16px; font-size:13px; }
+    /* 下单表单 */
+    .order-form { background:var(--card); padding:24px; border-radius:8px; border:1px solid var(--border); }
+    .form-group { margin-bottom:16px; }
+    .form-group label { display:block; font-size:13px; font-weight:500; margin-bottom:6px; }
+    .form-group input, .form-group select, .form-group textarea { width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:6px; font-size:14px; }
+    .form-group textarea { min-height:80px; resize:vertical; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .submit-btn { width:100%; padding:12px; background:var(--primary); color:#fff; border:none; border-radius:6px; font-size:15px; cursor:pointer; }
+    .submit-btn:hover { opacity:.9; }
+    .coming-soon { text-align:center; padding:40px; color:var(--muted); }
+    .coming-soon .icon { font-size:48px; margin-bottom:12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>客户门户</h1>
+      <div id="customerInfo" style="font-size:13px;color:var(--muted);"></div>
+    </header>
+
+    <div class="token-bar">
+      <input type="text" id="tokenInput" placeholder="请输入客户查询令牌 (X-Customer-Token)" />
+      <button onclick="login()">登录</button>
+      <button onclick="logout()" style="background:var(--muted)">退出</button>
+    </div>
+
+    <div id="errorBox"></div>
+
+    <div class="tabs" id="tabs" style="display:none">
+      <div class="tab active" onclick="switchTab('query')">订单查询</div>
+      <div class="tab" onclick="switchTab('products')">特价/报价</div>
+      <div class="tab" onclick="switchTab('stock')">断货求购</div>
+      <div class="tab" onclick="switchTab('tracking')">物流查询</div>
+      <div class="tab" onclick="switchTab('recon')">对账系统</div>
+      <div class="tab" onclick="switchTab('dashboard')">数据大屏</div>
+      <div class="tab" onclick="switchTab('place')">我要下单</div>
+      <div class="tab" onclick="switchTab('profile')">账户信息</div>
+    </div>
+
+    <!-- 查询面板 -->
+    <div class="panel active" id="panel-query">
+      <div class="filters" id="filters" style="display:none">
+        <input type="date" id="fDateFrom" placeholder="开始日期" />
+        <input type="date" id="fDateTo" placeholder="结束日期" />
+        <select id="fStatus">
+          <option value="">全部状态</option>
+          <option value="已完结">已完结</option>
+          <option value="已确认">已确认</option>
+          <option value="草稿">草稿</option>
+        </select>
+        <input type="number" id="fMinAmount" placeholder="最小金额" />
+        <input type="number" id="fMaxAmount" placeholder="最大金额" />
+        <input type="text" id="fKeyword" placeholder="关键词搜索" />
+        <button onclick="loadData(0)">筛选</button>
+        <button onclick="resetFilters()" style="background:var(--muted)">重置</button>
+      </div>
+
+      <div class="stats" id="stats" style="display:none">
+        <div class="stat-card"><div class="label">总订单数</div><div class="value" id="statTotal">-</div></div>
+        <div class="stat-card"><div class="label">应收总额</div><div class="value" id="statReceivable">-</div></div>
+        <div class="stat-card"><div class="label">应付总额</div><div class="value" id="statPayable">-</div></div>
+        <div class="stat-card"><div class="label">毛利总额</div><div class="value" id="statProfit">-</div></div>
+      </div>
+
+      <div id="tableArea"></div>
+
+      <div class="pagination" id="pagination" style="display:none">
+        <button onclick="prevPage()">上一页</button>
+        <span id="pageInfo"></span>
+        <button onclick="nextPage()">下一页</button>
+      </div>
+    </div>
+
+    <!-- 特价/报价面板 -->
+    <div class="panel" id="panel-products">
+      <div class="filters">
+        <select id="pfType" onchange="loadProducts()">
+          <option value="all">全部商品</option>
+          <option value="special">特价商品</option>
+          <option value="in_stock">有库存</option>
+        </select>
+        <input type="text" id="pfKeyword" placeholder="搜索产品名称/规格/地区" oninput="loadProducts()" />
+      </div>
+      <div id="productsArea"></div>
+    </div>
+
+    <!-- 断货求购面板 -->
+    <div class="panel" id="panel-stock">
+      <div class="stats" style="margin-bottom:16px">
+        <div class="stat-card"><div class="label">断货商品</div><div class="value" id="statOutOfStock" style="color:#dc2626">-</div></div>
+        <div class="stat-card"><div class="label">低库存商品</div><div class="value" id="statLowStock" style="color:#ea580c">-</div></div>
+      </div>
+      <div id="stockArea"></div>
+    </div>
+
+    <!-- 物流查询面板 -->
+    <div class="panel" id="panel-tracking">
+      <div class="filters">
+        <input type="text" id="tfOrderNo" placeholder="订单号" />
+        <input type="text" id="tfTrackingNo" placeholder="物流单号" />
+        <button onclick="loadTracking()">查询</button>
+        <button onclick="document.getElementById('tfOrderNo').value='';document.getElementById('tfTrackingNo').value='';loadTracking()" style="background:var(--muted)">重置</button>
+      </div>
+      <div id="trackingArea"></div>
+    </div>
+
+    <!-- 下单面板 -->
+    <div class="panel" id="panel-place">
+      <div class="order-form">
+        <div class="coming-soon">
+          <div class="icon">📝</div>
+          <h3>在线下单</h3>
+          <p>此功能即将上线，敬请期待。</p>
+          <p style="font-size:12px;margin-top:8px">预留接口: <code>POST /api/public/orders</code></p>
+        </div>
+        <!-- 预留表单结构，后续启用 -->
+        <!--
+        <div class="form-row">
+          <div class="form-group">
+            <label>产品名称 *</label>
+            <input type="text" id="pProduct" placeholder="请输入产品名称" />
+          </div>
+          <div class="form-group">
+            <label>数量 *</label>
+            <input type="number" id="pQty" placeholder="1" min="1" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>联系人 *</label>
+            <input type="text" id="pContact" placeholder="联系人姓名" />
+          </div>
+          <div class="form-group">
+            <label>联系电话 *</label>
+            <input type="tel" id="pPhone" placeholder="手机号码" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>备注</label>
+          <textarea id="pRemark" placeholder="其他需求说明..."></textarea>
+        </div>
+        <button class="submit-btn" onclick="placeOrder()">提交订单</button>
+        -->
+      </div>
+    </div>
+
+    <!-- 对账面板 -->
+    <div class="panel" id="panel-recon">
+      <div class="filters">
+        <input type="date" id="rDateFrom" placeholder="开始日期" />
+        <input type="date" id="rDateTo" placeholder="结束日期" />
+        <select id="rCategory">
+          <option value="">全部类型</option>
+          <option value="receivable">应收</option>
+          <option value="payable">应付</option>
+          <option value="received">已收</option>
+          <option value="paid">已付</option>
+        </select>
+        <button onclick="loadRecon(0)">查询</button>
+        <button onclick="document.getElementById('rDateFrom').value='';document.getElementById('rDateTo').value='';document.getElementById('rCategory').value='';loadRecon(0)" style="background:var(--muted)">重置</button>
+      </div>
+      <div class="stats" id="reconStats" style="display:none">
+        <div class="stat-card"><div class="label">借方合计</div><div class="value" id="rDebit">-</div></div>
+        <div class="stat-card"><div class="label">贷方合计</div><div class="value" id="rCredit">-</div></div>
+        <div class="stat-card"><div class="label">净额</div><div class="value" id="rNet">-</div></div>
+      </div>
+      <div id="reconArea"></div>
+      <div class="pagination" id="reconPagination" style="display:none">
+        <button onclick="prevReconPage()">上一页</button>
+        <span id="reconPageInfo"></span>
+        <button onclick="nextReconPage()">下一页</button>
+      </div>
+    </div>
+
+    <!-- 数据大屏面板 -->
+    <div class="panel" id="panel-dashboard">
+      <div class="stats">
+        <div class="stat-card"><div class="label">总订单数</div><div class="value" id="dOrders">-</div></div>
+        <div class="stat-card"><div class="label">应收总额</div><div class="value" id="dReceivable">-</div></div>
+        <div class="stat-card"><div class="label">应付总额</div><div class="value" id="dPayable">-</div></div>
+        <div class="stat-card"><div class="label">毛利</div><div class="value" id="dProfit">-</div></div>
+        <div class="stat-card"><div class="label">特价商品</div><div class="value" id="dSpecial">-</div></div>
+        <div class="stat-card"><div class="label">断货商品</div><div class="value" id="dOutOfStock" style="color:#dc2626">-</div></div>
+      </div>
+      <div style="background:var(--card);padding:20px;border-radius:8px;border:1px solid var(--border);margin-top:16px">
+        <h3 style="font-size:14px;margin-bottom:12px">近 30 天订单趋势</h3>
+        <div id="trendChart" style="height:200px;display:flex;align-items:flex-end;gap:4px"></div>
+      </div>
+    </div>
+
+    <!-- 账户面板 -->
+    <div class="panel" id="panel-profile">
+      <div class="order-form" id="profileCard" style="display:none">
+        <div class="form-group"><label>客户标识</label><input type="text" id="pKey" readonly /></div>
+        <div class="form-group"><label>显示名称</label><input type="text" id="pName" readonly /></div>
+        <div class="form-group"><label>所属基地</label><input type="text" id="pBase" readonly /></div>
+        <div class="form-group"><label>有效期至</label><input type="text" id="pExpires" readonly /></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/portal.js"></script>
+</body>
+</html>

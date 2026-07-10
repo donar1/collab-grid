@@ -1,0 +1,20 @@
+/* ============================================================
+   context-menu.css — 右键菜单
+   ============================================================ */
+
+.context-menu {
+  position: fixed; z-index: var(--cg-z-context-menu); width: 180px; padding: 6px;
+  background: var(--cg-white); border: 1px solid var(--cg-rule); border-radius: var(--cg-radius-xl); box-shadow: var(--cg-shadow);
+  display: grid; gap: 2px;
+}
+.context-menu button {
+  border: 0; background: transparent; text-align: left; padding: var(--cg-space-sm) 10px; border-radius: 7px;
+  cursor: pointer; font-size: var(--cg-font-base); color: var(--cg-ink);
+}
+.context-menu button:hover { background: var(--cg-accent-soft); color: var(--cg-accent); }
+.context-menu button.danger { color: var(--cg-danger); }
+.context-menu button.danger:hover { background: var(--cg-sealed-bg); color: var(--cg-danger); }
+.context-menu-title {
+  padding: var(--cg-space-sm) 10px; color: var(--cg-muted); font-size: var(--cg-font-sm); border-bottom: 1px solid var(--cg-rule);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}

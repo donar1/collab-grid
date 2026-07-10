@@ -1,0 +1,26 @@
+/* ============================================================
+   audit.css — 审计日志面板
+   ============================================================ */
+
+.audit-panel {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 480px; background: var(--cg-white);
+  border-left: 1px solid var(--cg-rule); padding: 16px; overflow: auto; z-index: var(--cg-z-audit-panel); box-shadow: var(--cg-shadow);
+  animation: slideIn 0.3s ease-out;
+}
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.audit-panel h3 { margin: 0 0 12px; font-size: 16px; }
+.audit-item { padding: var(--cg-space-sm) 0; border-bottom: 1px dashed var(--cg-rule); font-size: var(--cg-font-base); }
+.audit-item:hover { background: var(--cg-accent-soft); }
+.audit-item .who { font-weight: 600; }
+.audit-item .when { color: var(--cg-muted); font-size: var(--cg-font-sm); }
+.audit-item .what { color: var(--cg-ink); margin-top: 2px; }
+
+/* Responsive: 小屏幕下全宽 */
+@media (max-width: 768px) {
+  .audit-panel {
+    width: 100%; left: 0; right: 0; bottom: 0; top: auto; max-height: 80vh;
+  }
+}

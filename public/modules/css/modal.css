@@ -1,0 +1,90 @@
+/* ============================================================
+   modal.css — 模态框、弹窗、遮罩
+   ============================================================ */
+
+.modal-mask {
+  position: fixed; inset: 0; background: var(--cg-modal-overlay); display: grid; place-items: center; z-index: var(--cg-z-modal-mask);
+}
+.modal {
+  background: var(--cg-white); border-radius: var(--cg-radius-xl); width: 420px; padding: 22px; box-shadow: var(--cg-shadow);
+}
+.modal.wide { width: 560px; }
+.modal h3 { margin: 0 0 6px; }
+.modal .desc { color: var(--cg-muted); font-size: var(--cg-font-base); margin-bottom: var(--cg-space-md); }
+.modal label { display:block; font-size: var(--cg-font-sm); color: var(--cg-muted); margin: 10px 0 4px; }
+.modal input, .modal select, .modal textarea {
+  width: 100%; padding: var(--cg-space-sm) 10px; border: 1px solid var(--cg-rule); border-radius: var(--cg-radius-md); font-size: var(--cg-font-md); outline: none;
+  font-family: inherit;
+}
+.modal textarea { resize: vertical; min-height: 96px; }
+.modal input:focus, .modal select:focus, .modal textarea:focus { border-color: var(--cg-accent); }
+.modal .actions { margin-top: var(--cg-space-lg); display: flex; justify-content: flex-end; gap: var(--cg-space-sm); }
+.modal button { padding: var(--cg-space-sm) 14px; border: 1px solid var(--cg-rule); background: var(--cg-white); border-radius: var(--cg-radius-md); cursor: pointer; }
+.modal button.primary { background: var(--cg-accent); color: var(--cg-white); border-color: var(--cg-accent); }
+
+/* ---- option editor (inside modal) ---- */
+.option-editor {
+  display: grid;
+  gap: var(--cg-space-sm);
+  max-height: 260px;
+  overflow: auto;
+}
+.option-row {
+  display: grid;
+  grid-template-columns: 1fr 60px auto;
+  gap: var(--cg-space-sm);
+  align-items: center;
+}
+.option-row.option-row-header {
+  font-size: var(--cg-font-sm);
+  color: var(--cg-muted);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  padding: 0 2px 4px;
+  border-bottom: 1px dashed var(--cg-rule);
+}
+.option-row.option-row-header .option-col-title {
+  font-weight: 600;
+}
+.option-color-box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 32px;
+  border: 1px solid var(--cg-rule);
+  border-radius: var(--cg-radius-md);
+  cursor: pointer;
+  background: var(--cg-white);
+  overflow: hidden;
+}
+.option-color-box:hover { border-color: var(--cg-accent); }
+.option-color-box .option-swatch {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--cg-radius-sm);
+  pointer-events: none;
+}
+.modal .option-row .option-color {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+}
+.modal .option-row .option-remove {
+  padding: 7px 10px;
+  color: var(--cg-danger);
+}
+.modal .inline-add-btn {
+  margin-top: 10px;
+  width: 100%;
+  color: var(--cg-accent);
+  border-color: var(--cg-accent);
+  background: var(--cg-accent-soft);
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../app.js"],
+  "sourcesContent": ["// app.js \u2014 CollabGrid front-end entry point\n// All logic has been split into modules/ directory.\n// This file only references modules and kicks off the boot sequence.\n\n// Expose globally needed functions for inline event handlers (backward compat)\n// These are now provided by their respective modules via window.App* namespaces.\n\n// Boot the application\nif (window.AppAuth) {\n  window.AppAuth.boot();\n}\n"],
+  "mappings": ";AAQA,IAAI,OAAO,SAAS;AAClB,SAAO,QAAQ,KAAK;AACtB;",
+  "names": []
+}
